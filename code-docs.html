@@ -1,0 +1,893 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Syntribos Code Documentation &mdash; syntribos 0.1.3.dev37 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/tweaks.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.3.dev37',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="syntribos 0.1.3.dev37 documentation" href="index.html" />
+    <link rel="next" title="Executing unittests" href="unittests.html" />
+    <link rel="prev" title="Contributing Guidelines" href="contributing.html" /> 
+  </head>
+  <body>
+  <div id="header">
+    <h1 id="logo"><a href="http://www.openstack.org/">OpenStack</a></h1>
+    <ul id="navigation">
+      
+      <li><a href="http://www.openstack.org/" title="Go to the Home page" class="link">Home</a></li>
+      <li><a href="http://www.openstack.org/projects/" title="Go to the OpenStack Projects page">Projects</a></li>
+      <li><a href="http://www.openstack.org/user-stories/" title="Go to the User Stories page" class="link">User Stories</a></li>
+      <li><a href="http://www.openstack.org/community/" title="Go to the Community page" class="link">Community</a></li>
+      <li><a href="http://www.openstack.org/blog/" title="Go to the OpenStack Blog">Blog</a></li>
+      <li><a href="http://wiki.openstack.org/" title="Go to the OpenStack Wiki">Wiki</a></li>
+      <li><a href="http://docs.openstack.org/" title="Go to OpenStack Documentation" class="current">Documentation</a></li>
+      
+    </ul>
+  </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="syntribos-code-documentation">
+<h1>Syntribos Code Documentation<a class="headerlink" href="#syntribos-code-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the configuration specified in your configuration file
+(second argument to the runner).</p>
+<dl class="class">
+<dt id="syntribos.config.MainConfig">
+<em class="property">class </em><tt class="descclassname">syntribos.config.</tt><tt class="descname">MainConfig</tt><big>(</big><em>config_file_path=None</em>, <em>section_name=None</em><big>)</big><a class="headerlink" href="#syntribos.config.MainConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads in configuration data from config file.</p>
+<dl class="attribute">
+<dt id="syntribos.config.MainConfig.endpoint">
+<tt class="descname">endpoint</tt><a class="headerlink" href="#syntribos.config.MainConfig.endpoint" title="Permalink to this definition">¶</a></dt>
+<dd><p>The target host to be tested.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="syntribos.config.MainConfig.version">
+<tt class="descname">version</tt><a class="headerlink" href="#syntribos.config.MainConfig.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used for base_auth test</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the components involved with writing your own tests with
+Syntribos.</p>
+<p>All Syntribos tests inherit from <a class="reference internal" href="#syntribos.tests.base.BaseTestCase" title="syntribos.tests.base.BaseTestCase"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.tests.base.BaseTestCase</span></tt></a>,
+either directly, or through a subclass like
+<tt class="xref py py-class docutils literal"><span class="pre">syntribos.tests.fuzz.base_fuzz.BaseFuzzTestCase</span></tt>.</p>
+<p>All tests are aggregated in the <cite>syntribos.tests.base.test_table</cite> variable</p>
+<dl class="class">
+<dt id="syntribos.tests.base.TestType">
+<em class="property">class </em><tt class="descclassname">syntribos.tests.base.</tt><tt class="descname">TestType</tt><a class="headerlink" href="#syntribos.tests.base.TestType" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the metaclass for each class extending <tt class="xref py py-class docutils literal"><span class="pre">BaseTestCase</span></tt>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="syntribos.tests.base.BaseTestCase">
+<em class="property">class </em><tt class="descclassname">syntribos.tests.base.</tt><tt class="descname">BaseTestCase</tt><big>(</big><em>methodName='runTest'</em><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for building new tests</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Attribute test_name:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A name like <tt class="docutils literal"><span class="pre">XML_EXTERNAL_ENTITY_BODY</span></tt>, containing
+the test type and the portion of the request template being tested</td>
+</tr>
+</tbody>
+</table>
+<dl class="classmethod">
+<dt id="syntribos.tests.base.BaseTestCase.extend_class">
+<em class="property">classmethod </em><tt class="descname">extend_class</tt><big>(</big><em>new_name</em>, <em>fuzz_string</em>, <em>param_path</em>, <em>kwargs</em><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase.extend_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an extension for the class</p>
+<p>Each TestCase class created is added to the <cite>test_table</cite>, which is then
+read in by the test runner as the master list of tests to be run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>new_name</strong> (<em>str</em>) &#8211; Name of new class to be created</li>
+<li><strong>fuzz_string</strong> (<em>str</em>) &#8211; Fuzz string that is being used in this iteration</li>
+<li><strong>param_path</strong> (<em>str</em>) &#8211; String tracing location of the ImpactedParameter</li>
+<li><strong>kwargs</strong> (<em>dict</em>) &#8211; Keyword arguments to pass to the new class</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">class</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A TestCase class extending <tt class="xref py py-class docutils literal"><span class="pre">BaseTestCase</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.tests.base.BaseTestCase.get_test_cases">
+<em class="property">classmethod </em><tt class="descname">get_test_cases</tt><big>(</big><em>filename</em>, <em>file_content</em><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase.get_test_cases" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns tests for a given TestCase class (overwritten by children)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.tests.base.BaseTestCase.register_issue">
+<tt class="descname">register_issue</tt><big>(</big><em>issue</em><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase.register_issue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds an issue to the test&#8217;s list of issues</p>
+<p>Registers a <a class="reference internal" href="#syntribos.issue.Issue" title="syntribos.issue.Issue"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.issue.Issue</span></tt></a> object as a failure and
+associates the test&#8217;s metadata to it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>issue</strong> (<a class="reference internal" href="#syntribos.issue.Issue" title="syntribos.issue.Issue"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.issue.Issue</span></tt></a>) &#8211; issue object to update</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">new issue object with metadata associated</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#syntribos.issue.Issue" title="syntribos.issue.Issue"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.issue.Issue</span></tt></a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.tests.base.BaseTestCase.run_test">
+<tt class="descname">run_test</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase.run_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>This kicks off the test(s) for a given TestCase class</p>
+<p>After running the tests, an <cite>AssertionError</cite> is raised if any tests
+were added to self.failures.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body">AssertionError</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.tests.base.BaseTestCase.test_case">
+<tt class="descname">test_case</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase.test_case" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is overwritten by individual TestCase classes</p>
+<p>It represents the actual test that is called in <tt class="xref py py-func docutils literal"><span class="pre">run_test()</span></tt>,
+and handles populating <cite>self.failures</cite></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.tests.base.BaseTestCase.test_issues">
+<tt class="descname">test_issues</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.tests.base.BaseTestCase.test_issues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run assertions for each test registered in test_case.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="syntribos.tests.base.replace_invalid_characters">
+<tt class="descclassname">syntribos.tests.base.</tt><tt class="descname">replace_invalid_characters</tt><big>(</big><em>string</em>, <em>new_char='_'</em><big>)</big><a class="headerlink" href="#syntribos.tests.base.replace_invalid_characters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace invalid characters in test names</p>
+<p>This function corrects <cite>string</cite> so the following is true.</p>
+<p>Identifiers (also referred to as names) are described by the
+following lexical definitions:</p>
+<div class="line-block">
+<div class="line"><tt class="docutils literal"><span class="pre">identifier</span> <span class="pre">::=</span>&nbsp; <span class="pre">(letter|&quot;_&quot;)</span> <span class="pre">(letter</span> <span class="pre">|</span> <span class="pre">digit</span> <span class="pre">|</span> <span class="pre">&quot;_&quot;)*</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">letter</span>&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">::=</span>&nbsp; <span class="pre">lowercase</span> <span class="pre">|</span> <span class="pre">uppercase</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">lowercase</span>&nbsp; <span class="pre">::=</span>&nbsp; <span class="pre">&quot;a&quot;...&quot;z&quot;</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">uppercase</span>&nbsp; <span class="pre">::=</span>&nbsp; <span class="pre">&quot;A&quot;...&quot;Z&quot;</span></tt></div>
+<div class="line"><tt class="docutils literal"><span class="pre">digit</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span class="pre">::=</span>&nbsp; <span class="pre">&quot;0&quot;...&quot;9&quot;</span></tt></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string</strong> (<em>str</em>) &#8211; Test name</li>
+<li><strong>new_char</strong> (<em>str</em>) &#8211; The character to replace invalid characters with</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The test name, with invalid characters replaced with <cite>new_char</cite></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin">
+<em class="property">class </em><tt class="descclassname">syntribos.tests.fuzz.datagen.</tt><tt class="descname">FuzzMixin</tt><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mixin for fuzz tests</p>
+<p>This class provides the <a class="reference internal" href="#syntribos.tests.fuzz.datagen.FuzzMixin._fuzz_data" title="syntribos.tests.fuzz.datagen.FuzzMixin._fuzz_data"><tt class="xref py py-meth docutils literal"><span class="pre">_fuzz_data()</span></tt></a> function which
+yields a test name and all iterations of a given piece of data (currently
+supports <cite>dict</cite>, <tt class="xref py py-class docutils literal"><span class="pre">xml.etree.ElementTree.Element</span></tt>, and <cite>basestring</cite>
+formats) with each string provided.</p>
+<dl class="classmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._build_combinations">
+<em class="property">classmethod </em><tt class="descname">_build_combinations</tt><big>(</big><em>stri</em>, <em>dic</em>, <em>skip_var</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._build_combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Places fuzz string in fuzz location for object data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>stri</strong> &#8211; </li>
+<li><strong>dic</strong> &#8211; </li>
+<li><strong>skip_var</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._build_str_combinations">
+<em class="property">classmethod </em><tt class="descname">_build_str_combinations</tt><big>(</big><em>fuzz_string</em>, <em>data</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._build_str_combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Places <cite>fuzz_string</cite> in fuzz location for string data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fuzz_string</strong> (<em>str</em>) &#8211; Value to place in fuzz location</li>
+<li><strong>data</strong> (<em>str</em>) &#8211; Lines from the request template</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._build_xml_combinations">
+<em class="property">classmethod </em><tt class="descname">_build_xml_combinations</tt><big>(</big><em>stri</em>, <em>ele</em>, <em>skip_var</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._build_xml_combinations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Places fuzz string in fuzz location for XML data.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._fuzz_data">
+<em class="property">classmethod </em><tt class="descname">_fuzz_data</tt><big>(</big><em>strings</em>, <em>data</em>, <em>skip_var</em>, <em>name_prefix</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._fuzz_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates through model fields and places fuzz string in each field</p>
+<p>For each attribute in the model object, call the _build_combinations
+method corresponding to the type of the data parameter, which replaces
+the value with the fuzz string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>strings</strong> &#8211; </li>
+<li><strong>data</strong> &#8211; </li>
+<li><strong>skip_var</strong> &#8211; </li>
+<li><strong>name_prefix</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._merge_dictionaries">
+<em class="property">static </em><tt class="descname">_merge_dictionaries</tt><big>(</big><em>x</em>, <em>y</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._merge_dictionaries" title="Permalink to this definition">¶</a></dt>
+<dd><p>Merge <cite>dicts</cite> together</p>
+<p>Create a copy of <cite>x</cite>, and update that with elements of <cite>y</cite>, to prevent
+squashing of passed in dicts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x</strong> (<em>dict</em>) &#8211; Dictionary 1</li>
+<li><strong>y</strong> (<em>dict</em>) &#8211; Dictionary 2</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Merged dictionary</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>dict</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._update_attribs">
+<em class="property">static </em><tt class="descname">_update_attribs</tt><big>(</big><em>ele</em>, <em>attribs</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._update_attribs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies an XML element, populates attributes from <cite>attribs</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ele</strong> (<tt class="xref py py-class docutils literal"><span class="pre">xml.ElementTree.Element</span></tt>) &#8211; XML element to be copied, modified</li>
+<li><strong>attribs</strong> (<em>dict</em>) &#8211; Source of new attribute values for <cite>ele</cite></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">XML element with all attributes overwritten by <cite>attribs</cite></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">xml.ElementTree.Element</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._update_element">
+<em class="property">static </em><tt class="descname">_update_element</tt><big>(</big><em>ele</em>, <em>text</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._update_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies an XML element, updates its text attribute with <cite>text</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ele</strong> (<tt class="xref py py-class docutils literal"><span class="pre">xml.ElementTree.Element</span></tt>) &#8211; XML element to be copied, modified</li>
+<li><strong>text</strong> (<em>str</em>) &#8211; Text to populate <cite>ele</cite>&#8216;s text attribute with</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">XML element with &#8220;text&#8221; attribute set to <cite>text</cite></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><tt class="xref py py-class docutils literal"><span class="pre">xml.ElementTree.Element</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin._update_inner_element">
+<em class="property">static </em><tt class="descname">_update_inner_element</tt><big>(</big><em>ele</em>, <em>list_</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin._update_inner_element" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies an XML element, populates sub-elements from <cite>list_</cite></p>
+<p>Returns a copy of the element with the subelements given via <a href="#id1"><span class="problematic" id="id2">list_</span></a>
+:param ele: XML element to be copied, modified
+:type ele: <tt class="xref py py-class docutils literal"><span class="pre">xml.ElementTree.Element</span></tt>
+:param list <a href="#id3"><span class="problematic" id="id4">list_</span></a>: List of subelements to append to <cite>ele</cite>
+:returns: XML element with new subelements from <cite>list_</cite>
+:rtype: <tt class="xref py py-class docutils literal"><span class="pre">xml.ElementTree.Element</span></tt></p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="syntribos.tests.fuzz.datagen.FuzzMixin.remove_braces">
+<em class="property">static </em><tt class="descname">remove_braces</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzMixin.remove_braces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove braces from strings (in request templates)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="syntribos.tests.fuzz.datagen.FuzzRequest">
+<em class="property">class </em><tt class="descclassname">syntribos.tests.fuzz.datagen.</tt><tt class="descname">FuzzRequest</tt><big>(</big><em>method</em>, <em>url</em>, <em>action_field=None</em>, <em>headers=None</em>, <em>params=None</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzRequest" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="syntribos.tests.fuzz.datagen.FuzzRequest.fuzz_request">
+<tt class="descname">fuzz_request</tt><big>(</big><em>strings</em>, <em>fuzz_type</em>, <em>name_prefix</em><big>)</big><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzRequest.fuzz_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates the fuzzed request object</p>
+<p>Gets the name and the fuzzed request model from _fuzz_data, and
+creates a request object from the parameters of the model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>strings</strong> &#8211; </li>
+<li><strong>fuzz_type</strong> &#8211; </li>
+<li><strong>name_prefix</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Tuple of (name, request, fuzz string, ImpactedParameter name)</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>tuple</cite></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="syntribos.tests.fuzz.datagen.FuzzParser">
+<em class="property">class </em><tt class="descclassname">syntribos.tests.fuzz.datagen.</tt><tt class="descname">FuzzParser</tt><a class="headerlink" href="#syntribos.tests.fuzz.datagen.FuzzParser" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="issues">
+<h2>Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the representation of issues that are uncovered by
+Syntribos.</p>
+<dl class="class">
+<dt id="syntribos.issue.Issue">
+<em class="property">class </em><tt class="descclassname">syntribos.issue.</tt><tt class="descname">Issue</tt><big>(</big><em>test</em>, <em>severity</em>, <em>text</em>, <em>confidence</em>, <em>request=None</em>, <em>response=None</em>, <em>impacted_parameter=None</em><big>)</big><a class="headerlink" href="#syntribos.issue.Issue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Object that encapsulates a security vulnerability</p>
+<p>This object is designed to hold the metadata associated with
+a vulnerability.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>test</strong> &#8211; The type of vulnerability that Syntribos believes it has found.
+This may be something like 500 error or DoS, regardless of what the
+Test Type is.</li>
+<li><strong>severity</strong> &#8211; &#8220;Low&#8221;, &#8220;Medium&#8221;, or &#8220;High&#8221;, depending on the defect</li>
+<li><strong>text</strong> &#8211; Description of the defect</li>
+<li><strong>confidence</strong> &#8211; The confidence of the defect</li>
+<li><strong>request</strong> &#8211; The request object sent that generated this defect</li>
+<li><strong>response</strong> &#8211; The response object returned after sending the request</li>
+<li><strong>target</strong> &#8211; A hostname/IP/etc. to be tested</li>
+<li><strong>path</strong> &#8211; A specific REST API method, i.e. a URL path associated with a
+Target.</li>
+<li><strong>test_type</strong> &#8211; The type of vulnerability that is being tested for. This
+is not necessarily the same as the Defect Type, which may be something
+like 500 error or DoS.</li>
+<li><strong>impacted_parameter</strong> &#8211; For fuzz tests only, a
+<tt class="xref py py-class docutils literal"><span class="pre">syntribos.tests.fuzz.base_fuzz.ImpactedParameter</span></tt> that holds
+data about what part of the request was affected by the fuzz test.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="syntribos.issue.Issue.as_dict">
+<tt class="descname">as_dict</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.issue.Issue.as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the issue to a dict of values for outputting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><cite>dict</cite></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dictionary of issue data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.issue.Issue.request_as_dict">
+<tt class="descname">request_as_dict</tt><big>(</big><em>req</em><big>)</big><a class="headerlink" href="#syntribos.issue.Issue.request_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the request object to a dict of values for outputting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>req</strong> &#8211; The request object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><cite>dict</cite></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary of HTTP request data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.issue.Issue.response_as_dict">
+<tt class="descname">response_as_dict</tt><big>(</big><em>res</em><big>)</big><a class="headerlink" href="#syntribos.issue.Issue.response_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the response object to a dict of values for outputting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>res</strong> &#8211; The result object</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><cite>dict</cite></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary of HTTP response data</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the representation of results (collections of issues)
+from a given Syntribos run.</p>
+<dl class="class">
+<dt id="syntribos.result.IssueTestResult">
+<em class="property">class </em><tt class="descclassname">syntribos.result.</tt><tt class="descname">IssueTestResult</tt><big>(</big><em>stream</em>, <em>descriptions</em>, <em>verbosity</em><big>)</big><a class="headerlink" href="#syntribos.result.IssueTestResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom unnittest results holder class</p>
+<p>This class aggregates <a class="reference internal" href="#syntribos.issue.Issue" title="syntribos.issue.Issue"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.issue.Issue</span></tt></a> objects from all the
+tests as they run</p>
+<dl class="method">
+<dt id="syntribos.result.IssueTestResult.addError">
+<tt class="descname">addError</tt><big>(</big><em>test</em>, <em>err</em><big>)</big><a class="headerlink" href="#syntribos.result.IssueTestResult.addError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Duplicates parent class addError functionality.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>test</strong> (<a class="reference internal" href="#syntribos.tests.base.BaseTestCase" title="syntribos.tests.base.BaseTestCase"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.tests.base.BaseTestCase</span></tt></a>) &#8211; The test that encountered an error</li>
+<li><strong>err</strong> &#8211; </li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.result.IssueTestResult.addFailure">
+<tt class="descname">addFailure</tt><big>(</big><em>test</em>, <em>err</em><big>)</big><a class="headerlink" href="#syntribos.result.IssueTestResult.addFailure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds issues to data structures</p>
+<p>Appends issues to the result&#8217;s list of failures, as well as
+to a dict of {url: {method: {test_name: issue}}} structure.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>test</strong> (<a class="reference internal" href="#syntribos.tests.base.BaseTestCase" title="syntribos.tests.base.BaseTestCase"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.tests.base.BaseTestCase</span></tt></a>) &#8211; The test that has failed</li>
+<li><strong>err</strong> (<em>tuple</em>) &#8211; Tuple of format <tt class="docutils literal"><span class="pre">(type,</span> <span class="pre">value,</span> <span class="pre">traceback)</span></tt></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.result.IssueTestResult.printErrors">
+<tt class="descname">printErrors</tt><big>(</big><em>output_format</em><big>)</big><a class="headerlink" href="#syntribos.result.IssueTestResult.printErrors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print out each <a class="reference internal" href="#syntribos.issue.Issue" title="syntribos.issue.Issue"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.issue.Issue</span></tt></a> that was encountered</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>output_format</strong> (<em>str</em>) &#8211; Either &#8220;json&#8221; or &#8220;xml&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.result.IssueTestResult.stopTestRun">
+<tt class="descname">stopTestRun</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.result.IssueTestResult.stopTestRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print errors when the test run is complete.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="http-requests">
+<h2>HTTP Requests<a class="headerlink" href="#http-requests" title="Permalink to this headline">¶</a></h2>
+<p>This section describes the components related to generating, fuzzing, and making
+HTTP requests.</p>
+<dl class="class">
+<dt id="syntribos.clients.http.parser.RequestCreator">
+<em class="property">class </em><tt class="descclassname">syntribos.clients.http.parser.</tt><tt class="descname">RequestCreator</tt><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="classmethod">
+<dt id="syntribos.clients.http.parser.RequestCreator._parse_data">
+<em class="property">classmethod </em><tt class="descname">_parse_data</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator._parse_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the body of the HTTP request (e.g. POST variables)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>list</em>) &#8211; lines of the HTTP body</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">object representation of body data (JSON or XML)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.parser.RequestCreator._parse_headers">
+<em class="property">classmethod </em><tt class="descname">_parse_headers</tt><big>(</big><em>lines</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator._parse_headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find and return headers in HTTP request</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lines</strong> (<em>str</em>) &#8211; All but the first line of the HTTP request (list)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">headers as key:value pairs</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.parser.RequestCreator._parse_url_line">
+<em class="property">classmethod </em><tt class="descname">_parse_url_line</tt><big>(</big><em>line</em>, <em>endpoint</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator._parse_url_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split first line of an HTTP request into its components</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>line</strong> (<em>str</em>) &#8211; the first line of the HTTP request</li>
+<li><strong>endpoint</strong> (<em>str</em>) &#8211; the full URL of the endpoint to test</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">tuple</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">HTTP method, URL, request parameters, HTTP version</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.parser.RequestCreator.call_external_functions">
+<em class="property">classmethod </em><tt class="descname">call_external_functions</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator.call_external_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse external function calls in the body of request templates</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>string</strong> (<em>str</em>) &#8211; full HTTP request template as a string</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the request, with EXTERNAL calls filled in with their values
+or UUIDs</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.parser.RequestCreator.create_request">
+<em class="property">classmethod </em><tt class="descname">create_request</tt><big>(</big><em>string</em>, <em>endpoint</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator.create_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the HTTP request template into its components</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>string</strong> (<em>str</em>) &#8211; HTTP request template</li>
+<li><strong>endpoint</strong> (<em>str</em>) &#8211; URL of the target to be tested</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference internal" href="#syntribos.clients.http.models.RequestObject" title="syntribos.clients.http.models.RequestObject"><tt class="xref py py-class docutils literal"><span class="pre">syntribos.clients.http.models.RequestObject</span></tt></a></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">RequestObject with method, url, params, etc. for use by
+runner</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="syntribos.clients.http.parser.RequestCreator.request_model_type">
+<tt class="descname">request_model_type</tt><a class="headerlink" href="#syntribos.clients.http.parser.RequestCreator.request_model_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <tt class="xref py py-class docutils literal"><span class="pre">RequestObject</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="syntribos.clients.http.models.RequestObject">
+<em class="property">class </em><tt class="descclassname">syntribos.clients.http.models.</tt><tt class="descname">RequestObject</tt><big>(</big><em>method</em>, <em>url</em>, <em>action_field=None</em>, <em>headers=None</em>, <em>params=None</em>, <em>data=None</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object that holds information about an HTTP request.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="syntribos.clients.http.models.RequestHelperMixin">
+<em class="property">class </em><tt class="descclassname">syntribos.clients.http.models.</tt><tt class="descname">RequestHelperMixin</tt><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class that helps with fuzzing requests.</p>
+<dl class="staticmethod">
+<dt id="syntribos.clients.http.models.RequestHelperMixin._replace_iter">
+<em class="property">static </em><tt class="descname">_replace_iter</tt><big>(</big><em>string</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin._replace_iter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fuzz a string.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.models.RequestHelperMixin._run_iters">
+<em class="property">classmethod </em><tt class="descname">_run_iters</tt><big>(</big><em>data</em>, <em>action_field</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin._run_iters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively fuzz variables in <cite>data</cite> and its children</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>data</strong> &#8211; The request data to be modified</li>
+<li><strong>action_field</strong> &#8211; The name of the field to be replaced</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">object or string with action_field fuzzed</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>dict</cite> OR <cite>str</cite> OR <tt class="xref py py-class docutils literal"><span class="pre">ElementTree.Element</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.models.RequestHelperMixin._run_iters_dict">
+<em class="property">classmethod </em><tt class="descname">_run_iters_dict</tt><big>(</big><em>dic</em>, <em>action_field=''</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin._run_iters_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run fuzz iterators for a dict type.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.models.RequestHelperMixin._run_iters_list">
+<em class="property">classmethod </em><tt class="descname">_run_iters_list</tt><big>(</big><em>val</em>, <em>action_field=''</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin._run_iters_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run fuzz iterators for a list type.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="syntribos.clients.http.models.RequestHelperMixin._run_iters_xml">
+<em class="property">classmethod </em><tt class="descname">_run_iters_xml</tt><big>(</big><em>ele</em>, <em>action_field=''</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin._run_iters_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run fuzz iterators for an XML element type.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="syntribos.clients.http.models.RequestHelperMixin._string_data">
+<em class="property">static </em><tt class="descname">_string_data</tt><big>(</big><em>data</em><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin._string_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace various objects types with string representations.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.clients.http.models.RequestHelperMixin.get_prepared_copy">
+<tt class="descname">get_prepared_copy</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin.get_prepared_copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a copy of <cite>self</cite>, and prepare it for use by a fuzzer</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Copy of request object that has been prepared for sending</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><tt class="xref py py-class docutils literal"><span class="pre">RequestHelperMixin</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="syntribos.clients.http.models.RequestHelperMixin.prepare_request">
+<tt class="descname">prepare_request</tt><big>(</big><big>)</big><a class="headerlink" href="#syntribos.clients.http.models.RequestHelperMixin.prepare_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepare a request for sending off</p>
+<p>It should be noted this function does not make a request copy,
+destroying iterators in request.  A copy should be made if making
+multiple requests.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+<div class="sphinxsidebar">
+    <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Syntribos Code Documentation</a><ul>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
+<li><a class="reference internal" href="#issues">Issues</a></li>
+<li><a class="reference internal" href="#results">Results</a></li>
+<li><a class="reference internal" href="#http-requests">HTTP Requests</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="contributing.html"
+                                  title="previous chapter">Contributing Guidelines</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="unittests.html"
+                                  title="next chapter">Executing unittests</a></p>
+            <h3>Project Source</h3>
+            <ul class="this-page-menu">
+              <li><a href="http://git.openstack.org/cgit/git@github.com:openstack/syntribos
+"
+                     rel="nofollow">Project Source</a></li>
+            </ul>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/code-docs.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+    </div>
+</div>
+
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="unittests.html" title="Executing unittests"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contributing.html" title="Contributing Guidelines"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">syntribos 0.1.3.dev37 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+        &copy; Copyright 2015, OpenStack Foundation.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+//Tracking docs.openstack.org/developer/<projectname> only
+//The URL is built from the project variable in conf.py
+var pageTracker = _gat._getTracker("UA-17511903-1");
+pageTracker._setCookiePath("/developer/syntribos");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+
+  </body>
+</html>
